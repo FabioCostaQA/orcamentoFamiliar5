@@ -7,25 +7,30 @@ public class MesOrcamento {
 
     int mes;
 
-    //Receitas
-    Rubrica salario1 = new Rubrica(false, "Salário 1", 8000);
-    Rubrica salario2 = new Rubrica(false, "Salário 2", 7000);
-
-    //Despesas
-    Rubrica habitacao = new Rubrica(false, "Habitação", 1000);
-    Rubrica saude = new Rubrica(false, "Saúde", 900);
-    Rubrica transporte = new Rubrica(false, "Transporte", 800);
-    Rubrica despesasPessoais = new Rubrica(false, "Despesas Pessoais", 700);
-    Rubrica educacao = new Rubrica(false, "Educação", 600);
-    Rubrica lazer = new Rubrica(false, "Lazer", 500);
-    Rubrica outros = new Rubrica(false, "Outros", 400);
-
     static final int QTD_RUBRICAS_RECEITA = 2;
     static final int QTD_RUBRICAS_DESPESA = 7;
 
     Rubrica receitas[] = new Rubrica[QTD_RUBRICAS_RECEITA];
 
     Rubrica despesas[] = new Rubrica[QTD_RUBRICAS_DESPESA];
+
+    //Valores padrão
+    final double[] receitaValoresPadrao = {8000, 7000};
+    final double[] despesaValoresPadrao = {1000, 900, 800, 700, 600, 500, 400};
+
+    //Receitas
+    Rubrica salario1 = new Rubrica(false, "Salário 1", receitaValoresPadrao[0]);
+    Rubrica salario2 = new Rubrica(false, "Salário 2", receitaValoresPadrao[1]);
+
+    //Despesas
+    Rubrica habitacao = new Rubrica(false, "Habitação", despesaValoresPadrao[0]);
+    Rubrica saude = new Rubrica(false, "Saúde", despesaValoresPadrao[1]);
+    Rubrica transporte = new Rubrica(false, "Transporte", despesaValoresPadrao[2]);
+    Rubrica despesasPessoais = new Rubrica(false, "Despesas Pessoais", despesaValoresPadrao[3]);
+    Rubrica educacao = new Rubrica(false, "Educação", despesaValoresPadrao[4]);
+    Rubrica lazer = new Rubrica(false, "Lazer", despesaValoresPadrao[5]);
+    Rubrica outros = new Rubrica(false, "Outros", despesaValoresPadrao[6]);
+
 
     public MesOrcamento(int m) {
         mes = m;
@@ -83,6 +88,14 @@ public class MesOrcamento {
 
     public double getSaldoDisponivel() {
         return getTotalRubricas(receita) - getTotalRubricas(despesa);
+    }
+
+    public void restauraValoresOriginais() {
+        double totalRubricas = 0;
+        for (int i=0; i<getQuantidadeRubricas(despesa); i++)
+            setValorRubricaPorIndice(despesa, i,despesaValoresPadrao[i]);
+        for (int i=0; i<getQuantidadeRubricas(receita); i++)
+            setValorRubricaPorIndice(receita, i,receitaValoresPadrao[i]);
     }
 
 }

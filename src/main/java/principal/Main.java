@@ -188,7 +188,7 @@ public class Main {
         frame.getContentPane().add(panel);
 
         JPanel panelStatus = new JPanel();
-        panelStatus.setLayout(new GridLayout(3,1));
+        panelStatus.setLayout(new GridLayout(4,1));
         panelStatus.setPreferredSize(new Dimension(400,200));
 
         JButton buttonAtualizarTotais = new JButton("Atualizar totais");
@@ -208,9 +208,31 @@ public class Main {
             }
         });
 
+        JButton buttonRestauraValoresOriginais = new JButton("Restaurar valores originais");
+        buttonRestauraValoresOriginais.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+
+                mesMarco.restauraValoresOriginais();
+
+                for(int i=0;i<mesMarco.getQuantidadeRubricas(receita);i++)
+                    listaReceitas[i].setText(String.valueOf(mesMarco.getValorRubricaPorIndice(receita, i)));
+
+                for(int i=0;i<mesMarco.getQuantidadeRubricas(despesa);i++)
+                    listaDespesas[i].setText(String.valueOf(mesMarco.getValorRubricaPorIndice(despesa, i)));
+
+                somaDados();
+
+                jTfReceitas.setText(String.valueOf(totalReceitas));
+                jTfDespesas.setText(String.valueOf(totalDespesas));
+                jTfSaldoDisponivel.setText(String.valueOf(saldoDisponivel));
+            }
+        });
+
+
         JLabel jLabelTextoCopyright = new JLabel(textoCopyright);
         JLabel jLabelTextoInspiradoEm = new JLabel(textoInspiradoEm);
         panelStatus.add(buttonAtualizarTotais);
+        panelStatus.add(buttonRestauraValoresOriginais);
         panelStatus.add(jLabelTextoCopyright);
         panelStatus.add(jLabelTextoInspiradoEm);
 
